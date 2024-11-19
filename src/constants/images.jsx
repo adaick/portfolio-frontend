@@ -16,7 +16,7 @@ import circle from '../assets/circle.svg'
 import logo from '../assets/logo.png'
 
 
-export default {
+const images =  {
   email,
   mobile,
   python,
@@ -32,3 +32,5 @@ export default {
   circle,
   logo,
 };
+
+export default images;
