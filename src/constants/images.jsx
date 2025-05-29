@@ -28,7 +28,7 @@ const images =  {
   about03,
   about04,
   profile,
-  profile2,
+  // profile2,
   circle,
   logo,
 };
