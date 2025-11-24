@@ -8,35 +8,74 @@ import './Navbar.scss';
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
 
+  // Centralized nav config — easier to maintain
+  const navItems = [
+    { label: 'home', type: 'internal' },
+    { label: 'about', type: 'internal' },
+    { label: 'work', type: 'internal' },
+    { label: 'skills', type: 'internal' },
+    { label: 'contact', type: 'internal' },
+    { label: 'My Photography', type: 'external', url: 'https://adaick.darkroom.com/' },
+  ];
+
   return (
     <nav className="app__navbar">
       <div className="app__navbar-logo">
         <img src={images.logo} alt="logo" />
       </div>
+
+      {/* Desktop Menu */}
       <ul className="app__navbar-links">
-        {['home', 'about', 'work', 'skills', 'contact'].map((item) => (
-          <li className="app__flex p-text" key={`link-${item}`}>
+        {navItems.map(({ label, type, url }) => (
+          <li className="app__flex p-text" key={`link-${label}`}>
             <div />
-            <a href={`#${item}`}>{item}</a>
+            {type === 'external' ? (
+              <a
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {label}
+              </a>
+            ) : (
+              <a href={`#${label}`}>{label}</a>
+            )}
           </li>
         ))}
       </ul>
 
+      {/* Mobile Menu */}
       <div className="app__navbar-menu">
         <HiMenuAlt4 onClick={() => setToggle(true)} />
 
         {toggle && (
           <motion.div
-            whileInView={{ x: [300, 0] }}
+            initial={{ x: 300 }}
+            animate={{ x: 0 }}
             transition={{ duration: 0.85, ease: 'easeOut' }}
           >
             <HiX onClick={() => setToggle(false)} />
+
             <ul>
-              {['home', 'about', 'work', 'skills', 'contact'].map((item) => (
-                <li key={item}>
-                  <a href={`#${item}`} onClick={() => setToggle(false)}>
-                    {item}
-                  </a>
+              {navItems.map(({ label, type, url }) => (
+                <li key={label}>
+                  {type === 'external' ? (
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={() => setToggle(false)}
+                    >
+                      {label}
+                    </a>
+                  ) : (
+                    <a
+                      href={`#${label}`}
+                      onClick={() => setToggle(false)}
+                    >
+                      {label}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>
